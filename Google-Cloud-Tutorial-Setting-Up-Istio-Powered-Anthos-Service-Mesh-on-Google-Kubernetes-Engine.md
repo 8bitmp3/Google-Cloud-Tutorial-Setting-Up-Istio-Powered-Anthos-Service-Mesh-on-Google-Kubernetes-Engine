@@ -4,7 +4,7 @@
 
 - Introduction
 - Overview of Anthos
-- Overview of Anthos Service Mesh
+- Overview of an Anthos Service Mesh
     - Kubernetes and Anthos GKE
     - A brief history of containers (covering Borg, CGroups/Process Containers, Docker, and more)
 - Start a new Anthos Service Mesh project
@@ -16,7 +16,7 @@
 
 ## Introduction
 
-This tutorial provides an overview of the Anthos product suite and its major components, such as Anthos Service Mesh, Google Kubernetes Engine (GKE), and Istio for container, cluster, and service monitoring and management with Google Cloud. You will also be learning how to perform a clean installation of an Anthos Service Mesh on a Google Cloud GKE cluster in your project.
+This tutorial is designed to give you a broad overview of the Anthos product suite and its major components, such as Anthos Service Mesh, Google Kubernetes Engine (GKE), and Istio for container, cluster, and service monitoring and management with Google Cloud. You will also be learning how to perform a clean installation of an Anthos Service Mesh on a Google Cloud GKE cluster in your project.
 
 Google Cloud's **[Anthos Service Mesh](https://cloud.google.com/service-mesh/docs/overview)** provides operational control and insights over a service mesh—a network of microservices that make up the applications and the interactions between them. It enables users to get a uniform observability into the workloads, so that they can make informed decisions on routing traffic, security and encryption policy enforcement, and other rule configurations. 
 
@@ -30,7 +30,7 @@ In 2019, Google Cloud announced a broad product suite called **[Anthos](https://
 
 Anthos helps you move applications to the cloud-native world with improved workflow management and reduced operational complexity. You can move workloads from on-prem to the cloud and manage the infrastructure with a consistent set of policies and tools.
 
-For each of Google Cloud's fully-managed solutions, such as Google Kubernetes Engine (GKE) and Istio on GKE, Anthos has equivalent platforms for the hybrid world:
+For each of Google Cloud's fully-managed solutions, such as Google Kubernetes Engine (GKE) and Istio on GKE, Anthos has equivalent platforms for the on-prem, multi-cloud, and hybrid cloud world:
 
 | Fully-managed by Google Cloud   | For on-prem, multi-cloud, hybrid cloud |
 | ------------------------------- | -------------------------------------- |
@@ -58,7 +58,7 @@ Istio helps configure and manage various applications and services as the mesh n
 - Automatically load balance for various traffic types (HTTP, gRPC, WebSocket, and TCP).
 - Enforce security and encryption policy without changing applications themselves.
 
-An Istio Service Mesh is logically split into a **Data Plane** and a **Control plane**.
+An Istio Service Mesh is logically split into a **Data Plane** and a **Control Plane**.
 
 - The **Data Plane** has a set of proxies—**Envoys**—deployed as **sidecars**. They _mediate and control network communication between microservices_ along with **istiod** (previously, Galley and Mixer). You can deploy Envoy proxies to each Kubernetes pod to work alongside the applications. In return, you don't need to load additional libraries or make changes to your applications, as they manage client-side load balancing, circuit breakers, logging, mTLS, etc.
 
@@ -76,9 +76,9 @@ Starting from v1.5 as of Q1 2020, the Istio components in the Control Plane were
 
 In addition to being part of Anthos Service Mesh, Istio is also available as **[Istio on GKE](https://cloud.google.com/istio/docs/istio-on-gke/overview)** (a tool that provides automated installation and upgrade of Istio by running in GKE clusters).
 
-> Another key component of Anthos is **[Anthos Config Management](https://cloud.google.com/anthos-config-management/docs)** for automation of security and policy at scale. It allows to create a common configuration, including custom policies, and sync it across all Kubernetes clusters. With Anthos Config Management you get policy as code thanks to using Git, YAML, and JSON.
+> Another key component of Anthos is **[Anthos Config Management](https://cloud.google.com/anthos-config-management/docs)** designed for automation of security and policy at scale. It allows to create a common configuration, including custom policies, and sync it across all Kubernetes clusters. With Anthos Config Management you get _policy as code_ thanks to the use of Git, YAML, and JSON.
 > 
-> In addition, Anthos uses the **[Operations Suite](https://cloud.google.com/stackdriver/docs)** (formerly, **Stackdriver**), which provides an overview of logs and telemetries sent by Istio and allows you see logs across all services. It also provides application debugging and incident management.
+> In addition, Anthos uses the **[Operations Suite](https://cloud.google.com/stackdriver/docs)** (formerly, **Stackdriver**), which provides an overview of logs and telemetries sent by Istio and allows you see logs across all services. It also allows application debugging and incident management.
 
 ## Kubernetes and Anthos GKE
 
@@ -86,20 +86,19 @@ The Anthos platform suite uses [GKE](https://cloud.google.com/kubernetes-engine/
 
 Kubernetes provides container orchestration for better application management by:
 
-- Providing one master stateless server API instead of many APIs used for different tasks.
+- Having one master stateless server API instead of many APIs used for different tasks.
 - Simplifying operations through container packaging, so that you can scale applications without scaling operations.
-- Decoupling every piece of applications and systems for modularity and flexibility.
-    - Pods serve as atomic units of clusters in K8s and they act as modular and composable building blocks that help build distributed systems.
-    - Each pod has its own IP address and a set of pods—a DNS name, which can be load-balanced.
+- Decoupling every piece of applications and systems for modularity and flexibility:
+    - Pods serve as atomic units of clusters in K8s and they act as modular and composable building blocks that help build distributed systems. Each pod has its own IP address and a set of pods—a DNS name, which can be load-balanced.
 - Having names for processes for simpler discovery (for example, for networks or IPCs).
 - Having labels, which are key-value pairs (such as role "frontend", stage "production") that you can query against to help with organization and discovery.
-- Consistency and coherence of patterns and ideas of system behaviors.
+- Using consistent and coherent patterns and ideas of system behaviors.
 
 > Google Cloud has been offering a hosted version of Kubernetes called **[Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine/docs)** since 2015. A Kubernetes Engine cluster consists of a Kubernetes master API server hosted by Google and a set of worker nodes. The worker nodes are Google Cloud [Compute Engine VMs](https://cloud.google.com/compute/docs/containers).
 > 
-> To interact with the Anthos GKE for On-Prem clusters from the Google Cloud Console, you can use **GKE Hub** as a centralized management tool for your infrastructure.
+> To interact with the Anthos GKE for On-Prem clusters from the Google Cloud Console, you can use **GKE Hub**—a centralized management tool.
 > 
-> For workload migration from on-prem VMs, AWS or Azure to containers, Google Cloud offers **[Anthos Migrate](https://cloud.google.com/migrate/anthos/docs)**.
+> For workload migration from on-prem VMs, AWS or Azure to containers, Google Cloud has a solution called **[Anthos Migrate](https://cloud.google.com/migrate/anthos/docs)**.
 
 ## A brief history of containers    
 
@@ -145,7 +144,9 @@ Since its launch, Kubernetes has become the de facto standard for running contai
 
 <center><img src="img/istio-logo.png" width="120", hspace="20" vspace="20"></center>
 
-As application architectures have become increasingly based on shared services that are deployed and scaled dynamically on the cloud, there was a need for stronger service identity and authentication. As services are broken into atomic parts, it becomes more challenging to manage them. So, in 2017, teams from Google, IBM and Lyft founded a project called **[Istio](https://istio.io/)**. It is an open-source platform for connecting, securing, controlling, and monitoring microservices, while reducing the complexity of managing their deployments. Istio allows developers to deploy site reliability engineering best practices. Version 1.0 of Istio was released in 2018. 
+As application architectures became increasingly based on shared services that are deployed and scaled dynamically on the cloud, there was a need for stronger service identity and authentication. As services are broken into atomic parts, it becomes more challenging to manage them. 
+
+Therefore, in 2017, teams from Google, IBM and Lyft founded a project called **[Istio](https://istio.io/)**. It is an open-source platform for connecting, securing, controlling, and monitoring microservices, while reducing the complexity of managing their deployments. Istio allows developers to deploy site reliability engineering best practices. Version 1.0 of Istio was released in 2018. 
 
 ### _Knative_
 
@@ -159,16 +160,16 @@ Knative extends Kubernetes and provides essential components for building source
 
 ## Start a new Anthos Service Mesh project
 
+You have been given an overiew of containers, service mesh and various Anthos technologies on Google Cloud. Now, you will learn how to install an Anthos Service Mesh on a Google Cloud GKE cluster.
+
 Throughout the tutorial, you will be using two tools for managing and interacting with Google Cloud services, namely:
 
 - [_Google Cloud Console_](https://cloud.google.com/docs/overview#ways_to_interact_with_the_services): for interacting with Google Cloud via a graphical user interface in a browser. You can create, manage, and monitor any available Google Cloud services in the Cloud Console.
 - [_Google Cloud Shell_](https://cloud.google.com/shell/docs?hl=en): for command line and automation-based interactions with Google Cloud services. The Cloud Shell is a browser-based shell that is both interactive and authenticated. Cloud Shell is a virtual machine loaded with development tools offering a persistent 5GB home directory. You can choose to interact with developer tools (for example, Python), text editors (including vim and nano), and other tools (such as Git and pip).
 
-Let's set up Anthos GKE and Anthos Service Mesh in Google Cloud. 
+First, start with creating a new project and giving it a name—a **project ID**. In Google Cloud, a project ID is a customizable unique identifier for your project. 
 
-First, start with creating a new project and giving it a name—a project ID.
-
-> **Note**: In Google Cloud, a **project ID** is a customizable unique identifier for your project. It must start with a lowercase letter, and can contain only ASCII letters, digits, and hyphens, and must be between six and 30 characters. It is unique and when you choose it or any resource names, please do not include any sensitive information in them. Some words, such as ssl and google, are restricted from use in project IDs.
+> A **project ID** must start with a lowercase letter, and can contain only ASCII letters, digits, and hyphens, and must be between six and 30 characters. It is unique and when you choose it or any resource names, please do not include any sensitive information in them. Some words, such as ssl and google, are restricted from use in project IDs.
 
 ### In Cloud Console
 
