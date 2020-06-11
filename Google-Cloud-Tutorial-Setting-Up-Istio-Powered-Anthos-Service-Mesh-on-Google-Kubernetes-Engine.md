@@ -5,8 +5,9 @@
 - Introduction
 - Overview of Anthos
 - Overview of an Anthos Service Mesh
-    - Kubernetes and Anthos GKE
-    - A brief history of containers (covering Borg, CGroups/Process Containers, Docker, and more)
+    - Istio service mesh
+- Kubernetes and Anthos GKE
+- A brief history of containers (covering Borg, CGroups/Process Containers, Docker, and more)
 - Start a new Anthos Service Mesh project
 - Enable relevant APIs
 - Check your IAM permissions
@@ -18,7 +19,7 @@
 
 This tutorial is designed to give you a broad overview of the Anthos product suite and its major components, such as Anthos Service Mesh, Google Kubernetes Engine (GKE), and Istio for container, cluster, and service monitoring and management with Google Cloud. You will also be learning how to perform a clean installation of an Anthos Service Mesh on a Google Cloud GKE cluster in your project.
 
-Google Cloud's **[Anthos Service Mesh](https://cloud.google.com/service-mesh/docs/overview)** provides operational control and insights over a service mesh—a network of microservices that make up the applications and the interactions between them. It enables users to get a uniform observability into the workloads, so that they can make informed decisions on routing traffic, security and encryption policy enforcement, and other rule configurations. 
+Google Cloud's **[Anthos Service Mesh](https://cloud.google.com/service-mesh/docs/overview)** provides operational control and insights over a service mesh—a network of microservices that make up the applications and the interactions between them. It enables users to get a uniform observability into the workloads, so that they can make informed decisions on routing traffic, [security](https://cloud.google.com/service-mesh/docs/security-overview) and encryption policy enforcement, and other rule configurations. 
 
 ## Overview of Anthos
 
@@ -50,6 +51,8 @@ Anthos offers a structured view of various resources, including clusters, servic
 
 An Anthos Service Mesh is a network for services that manages interactions across all services. It uses a distribution of [Istio](https://istio.io/)—an open-source implementation of the service mesh infrastructure layer. 
 
+### Istio service mesh
+
 Istio helps configure and manage various applications and services as the mesh network scales. With Istio's mesh service platform, you can:
 
 - Uniformly observe all their workloads and obtain automatic metrics, logs, and traces for all traffic within clusters.
@@ -58,7 +61,7 @@ Istio helps configure and manage various applications and services as the mesh n
 - Automatically load balance for various traffic types (HTTP, gRPC, WebSocket, and TCP).
 - Enforce security and encryption policy without changing applications themselves.
 
-An Istio Service Mesh is logically split into a **Data Plane** and a **Control Plane**.
+An Istio service mesh is logically split into a **Data Plane** and a **Control Plane**.
 
 - The **Data Plane** has a set of proxies—**Envoys**—deployed as **sidecars**. They _mediate and control network communication between microservices_ along with **istiod** (previously, Galley and Mixer). You can deploy Envoy proxies to each Kubernetes pod to work alongside the applications. In return, you don't need to load additional libraries or make changes to your applications, as they manage client-side load balancing, circuit breakers, logging, mTLS, etc.
 
@@ -74,8 +77,8 @@ Starting from v1.5 as of Q1 2020, the Istio components in the Control Plane were
 
 **`istiod`** unified Pilot, Galley, Citadel and the Envoy sidecar injector functionalities into a single binary. Installation became easier with fewer required Kubernetes deployments and associated configurations. Many of the configuration options are no longer needed. Things, such as VM usage, maintenance of dependencies, and scalability (with just one component versus several) became easier too.
 
-In addition to being part of Anthos Service Mesh, Istio is also available as **[Istio on GKE](https://cloud.google.com/istio/docs/istio-on-gke/overview)** (a tool that provides automated installation and upgrade of Istio by running in GKE clusters).
-
+> **Note**: In addition to being part of Anthos Service Mesh, Istio is also available as **[Istio on GKE](https://cloud.google.com/istio/docs/istio-on-gke/overview)** (a tool that provides automated installation and upgrade of Istio by running in GKE clusters).
+> 
 > Another key component of Anthos is **[Anthos Config Management](https://cloud.google.com/anthos-config-management/docs)** designed for automation of security and policy at scale. It allows to create a common configuration, including custom policies, and sync it across all Kubernetes clusters. With Anthos Config Management you get _policy as code_ thanks to the use of Git, YAML, and JSON.
 > 
 > In addition, Anthos uses the **[Operations Suite](https://cloud.google.com/stackdriver/docs)** (formerly, **Stackdriver**), which provides an overview of logs and telemetries sent by Istio and allows you see logs across all services. It also allows application debugging and incident management.
@@ -94,7 +97,7 @@ Kubernetes provides container orchestration for better application management by
 - Having labels, which are key-value pairs (such as role "frontend", stage "production") that you can query against to help with organization and discovery.
 - Using consistent and coherent patterns and ideas of system behaviors.
 
-> Google Cloud has been offering a hosted version of Kubernetes called **[Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine/docs)** since 2015. A Kubernetes Engine cluster consists of a Kubernetes master API server hosted by Google and a set of worker nodes. The worker nodes are Google Cloud [Compute Engine VMs](https://cloud.google.com/compute/docs/containers).
+> **Note:** Google Cloud has been offering a hosted version of Kubernetes called **[Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine/docs)** since 2015. A Kubernetes Engine cluster consists of a Kubernetes master API server hosted by Google and a set of worker nodes. The worker nodes are Google Cloud [Compute Engine VMs](https://cloud.google.com/compute/docs/containers).
 > 
 > To interact with the Anthos GKE for On-Prem clusters from the Google Cloud Console, you can use **GKE Hub**—a centralized management tool.
 > 
@@ -363,10 +366,13 @@ Anthos is powered by Kubernetes. Therefore, before you get Anthos Mesh Service u
 
     > **Note**: GKE includes integration with **Cloud Monitoring** and **Cloud Logging** for monitoring, system management, log debugging, and performance analysis.
     
-- The VPC **subnetwork** is set to "default".
+- The Virtual Private Cloud (VPC) **subnetwork (subnet)** is set to "default".
+
+    > **Note**: In Google Cloud, new projects start with a default [VPC network](https://cloud.google.com/vpc/docs/vpc) (an auto mode VPC network) that has one subnet per each region.
+    
 - Add a **metrics label for Anthos Mesh Service** with a key-value pair of "**mesh_id**" and "**proj-{PROJECT_NUMBER}**". 
 
-    > **Note**: The label **mesh_id** is required for metrics to be displayed on the **Anthos Service Mesh Dashboard**. It follows the `proj-{PROJECT_NUMBER}` format.
+    > **Note**: The label **mesh_id** is required for metrics to be displayed on the **Anthos Service Mesh dashboard**. It follows the `proj-{PROJECT_NUMBER}` format.
     
 ### In Cloud Console
 
@@ -457,15 +463,17 @@ Anthos is powered by Kubernetes. Therefore, before you get Anthos Mesh Service u
     export CLUSTER_ZONE=us-central1-b
     ```
 
-- For the metrics label used by the Anthos Mesh Service Dashboard, set a variable for the value as follow:
+- For the metrics label used by the Anthos Mesh Service dashboard, set a variable for the value as follow:
 
     ```bash
     export MESH_ID="proj-${PROJECT_NUMBER}"
     ```
 
-    > **Note**: Your project ID can be invoked with `echo $PROJECT_NUMBER` in the Cloud Shell. If you did not set up environment variables mentioned in the previous steps of this tutorial, you can run `gcloud config get-value project` and look for the project number.
+    > **Note**: Your project number can be invoked with `echo $PROJECT_NUMBER` in the Cloud Shell. If you did not set up environment variables mentioned in one of the previous steps of this tutorial, you can run `gcloud config get-value project` and look for your project number.
     
-- Like in the Cloud Console, you'll also be enabling **Workload Identity** using the "{PROJECT_ID}.svc.id.goog**" format. Set the workload identity namespace to "**myanthosproject.svc.id.goog**":
+- Like in the Cloud Console, you'll also be enabling **Workload Identity** using the "{PROJECT_ID}.svc.id.goog**" format. Set the workload identity [namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) to "**myanthosproject.svc.id.goog**":
+
+    > **Note**: [Namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) in Kubernetes are virtual clusters backed by the same physical cluster. They provide a way to divide cluster resources between multiple users.
 
     ```bash
     export WORKLOAD_IDENTITY=${PROJECT_ID}.svc.id.goog
@@ -491,7 +499,7 @@ Anthos is powered by Kubernetes. Therefore, before you get Anthos Mesh Service u
             --labels mesh_id=${MESH_ID}
         ```
 
-    - Notice that you are specifying the machine type, the number of nodes, the namespace for the workload identity (security), the VPC subnetwork, and the key-value label for the Anthos Mesh Service Dashboard. In addition, you're enabling Stackdriver for Kubernetes, which is now called Monitoring and Logging.
+    - Notice that you are specifying the machine type, the number of nodes, the namespace for the workload identity (security), the VPC subnet, and the key-value label for the Anthos Mesh Service dashboard. In addition, you're enabling Stackdriver for Kubernetes, which is now called Monitoring and Logging.
 
     - This process may take several minutes to complete. Your output should look similar to this:
 
@@ -556,7 +564,7 @@ This task is recommended to be performed in the Cloud Shell.
 
 3. In this step, you'll be binding your user account to the `cluster-admin` role. 
 
-    Anthos Service Mesh requires [role-based access control (RBAC)](http://cloud.google.com/kubernetes-engine/docs/how-to/role-based-access-control) rules. The RBAC mechanism regulates access to Kubernetes objects in your cluster or in a specific Namespace of your cluster based on the users' roles. (Note that Kubernetes RBAC is enabled by default.)
+    Anthos Service Mesh requires [role-based access control (RBAC)](http://cloud.google.com/kubernetes-engine/docs/how-to/role-based-access-control) rules. The RBAC mechanism regulates access to Kubernetes objects in your cluster or in a specific namespace of your cluster based on the users' roles. (Note that Kubernetes RBAC is enabled by default.)
 
     - Provide admin permissions to your user account with Kubernetes' `kubectl create clusterrolebinding` [command](https://kubernetes.io/docs/reference/access-authn-authz/rbac/) with a custom binding name (for example, `cluster-admin-binding`):
 
@@ -780,8 +788,8 @@ This task is recommended to be performed in the Cloud Shell.
 
         > *Note:** you can manually inject proxy sidecars by following Istio's documentation [here](https://istio.io/docs/setup/additional-setup/sidecar-injection/).
 
-4. View the Anthos Service Mesh Dashboard
+4. View the Anthos Service Mesh dashboard.
 
-    The Anthos Service Mesh Dashboard is controlled by Google Cloud Identity and Access Management ([Cloud IAM](https://cloud.google.com/iam/docs/overview)).
+    The [Anthos Service Mesh dashboard](https://cloud.google.com/service-mesh/docs/observability/explore-dashboard) provides summary, metrics, charts, and graphs to monitor service behavior. It is controlled by Google Cloud Identity and Access Management ([Cloud IAM](https://cloud.google.com/iam/docs/overview)).
 
-    - If you are the Project Owner, Editor or Viewer, you can access the Dashboard by going to: https://console.cloud.google.com/anthos/services.
+    - If you are the Project Owner, Editor or Viewer, you can access the dashboard by going to: https://console.cloud.google.com/anthos/services.
