@@ -35,7 +35,7 @@ For each of Google Cloud's fully-managed solutions, such as Google Kubernetes En
 
 | Fully-managed by Google Cloud   | For on-prem, multi-cloud, hybrid cloud |
 | ------------------------------- | -------------------------------------- |
-| Kubernetes Engine (GKE)         | Anthos GKE (On-Prem, for AWS/Azure     |
+| Kubernetes Engine (GKE)         | Anthos GKE (On-Prem, for AWS/Azure)     |
 | Istio on GKE                    | Anthos Service Mesh                    |
 
 Anthos GKE and Anthos Service Mesh are built on open-source and widely-adopted technologies led by Google and its partners, namely: **[Kubernetes](https://kubernetes.io)** and **[Istio](https://istio.io)**
