@@ -13,7 +13,7 @@
 - Check your IAM permissions
 - Provision a new Google Kubernetes Engine cluster
 - Create a service account for Istio and authenticate
-- Install a Anthos Service Mesh with `istioctl`
+- Install an Anthos Service Mesh with `istioctl`
 
 ## Introduction
 
@@ -786,7 +786,7 @@ This task is recommended to be performed in the Cloud Shell.
         namespace/default labeled
         ```
 
-        > *Note:** you can manually inject proxy sidecars by following Istio's documentation [here](https://istio.io/docs/setup/additional-setup/sidecar-injection/).
+        > **Note:** you can manually inject proxy sidecars by following Istio's documentation [here](https://istio.io/docs/setup/additional-setup/sidecar-injection/).
 
 4. View the Anthos Service Mesh dashboard.
 
