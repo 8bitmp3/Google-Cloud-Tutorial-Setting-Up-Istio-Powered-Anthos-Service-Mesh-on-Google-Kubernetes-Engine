@@ -17,7 +17,7 @@ It is designed to give a broad overview of the Anthos product suite and its majo
 - Check your IAM permissions
 - Provision a new Google Kubernetes Engine cluster
 - Create a service account for Istio and authenticate
-- Install a Anthos Service Mesh with `istioctl`
+- Install an Anthos Service Mesh with `istioctl`
 
 See this [link](https://github.com/8bitmp3/Google-Cloud-Tutorial-Setting-Up-Istio-Powered-Anthos-Service-Mesh-on-Google-Kubernetes-Engine/blob/master/Google-Cloud-Tutorial-Setting-Up-Istio-Powered-Anthos-Service-Mesh-on-Google-Kubernetes-Engine.md) for the full tutorial.
 
