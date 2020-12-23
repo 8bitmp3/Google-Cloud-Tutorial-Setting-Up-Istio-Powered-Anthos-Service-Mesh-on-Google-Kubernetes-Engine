@@ -1,6 +1,6 @@
 # Setting up Istio-powered Anthos Service Mesh on Google Kubernetes Engine
 
-This is an example of a Google Cloud [tutorial](https://github.com/8bitmp3/Google-Cloud-Tutorial-Setting-Up-Istio-Powered-Anthos-Service-Mesh-on-Google-Kubernetes-Engine/blob/master/Google-Cloud-Tutorial-Setting-Up-Istio-Powered-Anthos-Service-Mesh-on-Google-Kubernetes-Engine.md) I wrote when learning how to use Istio and Anthos.
+_This is a sample from a Google Cloud [tutorial](https://github.com/8bitmp3/Google-Cloud-Tutorial-Setting-Up-Istio-Powered-Anthos-Service-Mesh-on-Google-Kubernetes-Engine/blob/master/Google-Cloud-Tutorial-Setting-Up-Istio-Powered-Anthos-Service-Mesh-on-Google-Kubernetes-Engine.md) I wrote when learning how to use Istio and Anthos_.
 
 It is designed to give a broad overview of the Anthos product suite and its major components, such as Anthos Service Mesh, Google Kubernetes Engine (GKE), and Istio for container, cluster, and service monitoring and management with Google Cloud. You will also be learning how to perform a clean installation of an Anthos Service Mesh on a Google Cloud GKE cluster in your project.
 
@@ -121,3 +121,5 @@ Kubernetes is a powerful project. And applications that can be run outside of mo
 Knative extends Kubernetes and provides essential components for building source-centric, modern, and container-based software that can run anywhere, while bringing workload portability and the serverless developer experience. Users are able to have both the velocity of application development and flexibility without the lock-in. Knative has received [contributions](https://knative.dev/community/contributing//annual_reports/Knative%202019%20Annual%20Report.pdf) from Pivotal, IBM, and Red Hat, among others, and has had collaborations with the open-source function-as-a-service framework communities, such as OpenWhisk, riff, and Kyma.
 
 > Knative powers Google Cloud's managed cloud-based solution called **[Cloud Run](https://cloud.google.com/run/docs)**. It is also a part of **[Cloud Run for Anthos](https://cloud.google.com/run/docs/gke/setup)**, which is not covered in this tutorial.
+
+(_For a full tutorial on Setting up Istio-powered Anthos Service Mesh on Google Kubernetes Engine click [here](https://github.com/8bitmp3/Google-Cloud-Tutorial-Setting-Up-Istio-Powered-Anthos-Service-Mesh-on-Google-Kubernetes-Engine/blob/master/Google-Cloud-Tutorial-Setting-Up-Istio-Powered-Anthos-Service-Mesh-on-Google-Kubernetes-Engine.md)._)
